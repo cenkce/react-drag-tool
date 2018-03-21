@@ -7,12 +7,28 @@ export default class Item extends Component {
   }
 
   selected = currentItem => {
-    console.log(findDOMNode(this.item).getBoundingClientRect())
-    const left = findDOMNode(this.item).offsetLeft
-    this.setState({
-      left
-    })
-    this.props.onSelection('2')
+    const findDOMNODE = findDOMNode(this.item).getBoundingClientRect()
+    const selectT = findDOMNODE.top
+    const selectH = findDOMNODE.height
+    const selectL = findDOMNODE.left
+    const selectW = findDOMNODE.width
+    const elementW = Math.abs(this.props.marqueeEndPos.x)
+    const elementH = Math.abs(this.props.marqueeEndPos.y)
+    const elementL = Math.min(
+      this.props.marqueeStartPos.x,
+      this.props.marqueeOldMouse.x
+    )
+    const elementT = Math.min(
+      this.props.marqueeStartPos.y,
+      this.props.marqueeOldMouse.y
+    )
+    const tolerance = 0
+    return !(
+      elementT + elementH - tolerance < selectT ||
+      elementT + tolerance > selectT + selectH ||
+      elementL + elementW - tolerance < selectL ||
+      elementL + tolerance > selectL + selectW
+    )
   }
 
   render() {

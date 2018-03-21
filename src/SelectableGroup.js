@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom'
 import Item from './Item'
 
 export default class SelectableGroup extends Component {
@@ -9,10 +10,9 @@ export default class SelectableGroup extends Component {
     }
   }
 
-  handleSelection = selectedItem => {
-    console.log(selectedItem)
+  handleSelection = e => {
+    //console.log(e)
   }
-
   selectItem = item => {
     this.state.selected.push(item)
   }
@@ -20,7 +20,14 @@ export default class SelectableGroup extends Component {
   render() {
     return this.props.items.map((item, i) => {
       return (
-        <Item onSelection={this.handleSelection} key={i} item={item.title} />
+        <Item
+          onSelection={this.handleSelection}
+          item={item.title}
+          key={i}
+          marqueeStartPos={this.props.marqueeStartPos}
+          marqueeOldMouse={this.props.marqueeOldMouse}
+          marqueeEndPos={this.props.marqueeEndPos}
+        />
       )
     })
   }

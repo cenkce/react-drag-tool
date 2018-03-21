@@ -107,10 +107,14 @@ class App extends Component {
       this.state.marqueeStartPos.x,
       this.state.marqueeOldMouse.x
     )
+    const startPos = this.state.marqueeStartPos.x
+    const oldPos = this.state.marqueeEndPos.x
+
     const a = Math.min(
-      (this.state.marqueeStartPos.x, this.state.marqueeOldMouse.x) - 3
+      this.state.marqueeStartPos.x,
+      this.state.marqueeOldMouse.x
     )
-    console.log('asa', a)
+    console.log('startPos', startPos, 'oldPos', oldPos, 'MathMin', a)
     const boxTop = Math.min(
       this.state.marqueeStartPos.y,
       this.state.marqueeOldMouse.y
@@ -122,6 +126,9 @@ class App extends Component {
           <SelectableGroup
             ref={c => (this.selectableRef = c)}
             items={getData}
+            marqueeStartPos={this.state.marqueeStartPos}
+            marqueeOldMouse={this.state.marqueeOldMouse}
+            marqueeEndPos={this.state.marqueeEndPos}
           />
         </div>
         <div
