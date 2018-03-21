@@ -28,7 +28,7 @@ class App extends Component {
     this.onMouseMove = this.mouseMove.bind(this)
   }
   componentWillMount() {
-    this.initialState = this.state
+    //this.initialState = this.state
   }
 
   onMouseDown(e) {

@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom'
-import Item from './Item'
+import React, { Component } from "react"
+import { findDOMNode } from "react-dom"
+import Item from "./Item"
 
 export default class SelectableGroup extends Component {
   constructor(props) {
@@ -19,11 +19,13 @@ export default class SelectableGroup extends Component {
 
   render() {
     return this.props.items.map((item, i) => {
+
       return (
         <Item
           onSelection={this.handleSelection}
           item={item.title}
           key={i}
+          selectKey={i}
           marqueeStartPos={this.props.marqueeStartPos}
           marqueeOldMouse={this.props.marqueeOldMouse}
           marqueeEndPos={this.props.marqueeEndPos}

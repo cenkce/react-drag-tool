@@ -1,13 +1,23 @@
-import React, { Component } from 'react'
-import { findDOMNode } from 'react-dom'
+import React, { Component } from "react"
+import { findDOMNode } from "react-dom"
 
 export default class Item extends Component {
-  componentDidMount() {
-    this.selected()
+  constructor(props) {
+    super(props)
+    this.state = {
+      selected: []
+    }
+  }
+  componentWillReceiveProps() {
+    const isTrue = this.selected()
+    if (isTrue === true) {
+      console.log(this.props.selectKey, isTrue)
+    }
   }
 
   selected = currentItem => {
     const findDOMNODE = findDOMNode(this.item).getBoundingClientRect()
+
     const selectT = findDOMNODE.top
     const selectH = findDOMNODE.height
     const selectL = findDOMNODE.left
