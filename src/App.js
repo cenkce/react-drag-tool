@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Item from './Item'
 import getData from './data'
 import './App.css'
-
+import SelectableGroup from './SelectableGroup'
 class App extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +26,6 @@ class App extends Component {
 
     this.onMouseDown = this.onMouseDown.bind(this)
     this.onMouseMove = this.mouseMove.bind(this)
-    this._rect = null
   }
   componentWillMount() {
     this.initialState = this.state
@@ -54,7 +53,6 @@ class App extends Component {
     const offsetX = e.clientX - parentRect.left
     const offsetY = e.clientY - parentRect.top
 
-    console.log('sds', this._rect)
     this.setState({
       marqueeStartPos: {
         x: offsetX,
@@ -101,9 +99,6 @@ class App extends Component {
       }
     })
   }
-  handleSelection(keys) {
-    console.log(keys)
-  }
 
   render() {
     const widthBox = Math.abs(this.state.marqueeEndPos.x)
@@ -112,7 +107,10 @@ class App extends Component {
       this.state.marqueeStartPos.x,
       this.state.marqueeOldMouse.x
     )
-
+    const a = Math.min(
+      (this.state.marqueeStartPos.x, this.state.marqueeOldMouse.x) - 3
+    )
+    console.log('asa', a)
     const boxTop = Math.min(
       this.state.marqueeStartPos.y,
       this.state.marqueeOldMouse.y
@@ -120,14 +118,11 @@ class App extends Component {
 
     return (
       <Fragment>
-        <div
-          className="flex-container"
-          //onSelection={this.handleSelection}
-          onMouseDown={this.onMouseDown}
-        >
-          {getData.map((item, i) => {
-            return <Item key={i} item={item.title} />
-          })}
+        <div className="flex-container" onMouseDown={this.onMouseDown}>
+          <SelectableGroup
+            ref={c => (this.selectableRef = c)}
+            items={getData}
+          />
         </div>
         <div
           className={!this.state.marqueeSelection ? 'hidden' : ''}

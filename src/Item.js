@@ -3,9 +3,16 @@ import { findDOMNode } from 'react-dom'
 
 export default class Item extends Component {
   componentDidMount() {
-    const selectBox = this.item
-    const findSelectBox = findDOMNode(selectBox)
-    console.log(findSelectBox)
+    this.selected()
+  }
+
+  selected = currentItem => {
+    console.log(findDOMNode(this.item).getBoundingClientRect())
+    const left = findDOMNode(this.item).offsetLeft
+    this.setState({
+      left
+    })
+    this.props.onSelection('2')
   }
 
   render() {
