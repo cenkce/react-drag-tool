@@ -1,7 +1,9 @@
-import React, { Component } from "react"
-import "./App.css"
-import ReactDOM from "react-dom"
-import { data } from "./data"
+import React, { Component, Fragment } from 'react'
+import ReactDOM from 'react-dom'
+import Item from './Item'
+import getData from './data'
+import './App.css'
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -29,29 +31,11 @@ class App extends Component {
   componentWillMount() {
     this.initialState = this.state
   }
-  componentDidMount() {
-    this._rect = this._getInitialCoordinates()
-    console.log(this._rect)
-  }
-  _getInitialCoordinates() {
-    const style = window.getComputedStyle(document.body)
-    const t = style.getPropertyValue("margin-top")
-    const l = style.getPropertyValue("margin-left")
-    const mLeft = parseInt(l.slice(0, l.length - 2), 10)
-    const mTop = parseInt(t.slice(0, t.length - 2), 10)
 
-    const bodyRect = document.body.getBoundingClientRect()
-    const elemRect = ReactDOM.findDOMNode(this).getBoundingClientRect()
-    console.log(elemRect)
-    return {
-      x: Math.round(elemRect.left - bodyRect.left + mLeft),
-      y: Math.round(elemRect.top - bodyRect.top + mTop)
-    }
-  }
   onMouseDown(e) {
     const mouseUp = e => {
-      document.body.removeEventListener("mouseup", mouseUp)
-      document.body.removeEventListener("mousemove", this.onMouseMove)
+      document.body.removeEventListener('mouseup', mouseUp)
+      document.body.removeEventListener('mousemove', this.onMouseMove)
 
       if (this.state.marqueeSelection == true) {
         e.stopPropagation()
@@ -65,11 +49,14 @@ class App extends Component {
       clearTimeout(timeout)
     }
 
-    document.body.addEventListener("click", mouseUp)
+    document.body.addEventListener('click', mouseUp)
     const parentRect = e.currentTarget.getBoundingClientRect()
     const offsetX = e.clientX - parentRect.left
     const offsetY = e.clientY - parentRect.top
 
+    this._rect = this._getInitialCoordinates()
+
+    console.log('sds', this._rect)
     this.setState({
       marqueeStartPos: {
         x: offsetX,
@@ -91,13 +78,13 @@ class App extends Component {
   }
 
   startSelection() {
-    console.log("items null")
+    console.log('items null')
 
     this.setState({
       marqueeSelection: true
     })
 
-    document.body.addEventListener("mousemove", this.onMouseMove)
+    document.body.addEventListener('mousemove', this.onMouseMove)
   }
   mouseMove(e) {
     var delta = {
@@ -116,6 +103,9 @@ class App extends Component {
       }
     })
   }
+  handleSelection(keys) {
+    console.log(keys)
+  }
 
   render() {
     const widthBox = Math.abs(this.state.marqueeEndPos.x)
@@ -131,21 +121,30 @@ class App extends Component {
     )
 
     return (
-      <div className="App" onMouseDown={this.onMouseDown}>
+      <Fragment>
         <div
-          className={!this.state.marqueeSelection ? "hidden" : ""}
+          className="flex-container"
+          //onSelection={this.handleSelection}
+          onMouseDown={this.onMouseDown}
+        >
+          {getData.map((item, i) => {
+            return <Item key={i} item={item.title} />
+          })}
+        </div>
+        <div
+          className={!this.state.marqueeSelection ? 'hidden' : ''}
           style={{
             width: widthBox,
             height: heightBox,
-            position: "absolute",
-            cursor: "default",
-            zIndex: "9999",
-            border: "1px solid red",
+            position: 'absolute',
+            cursor: 'default',
+            zIndex: '99999',
+            border: '1px solid #ffffff',
             left: boxLeft,
             top: boxTop
           }}
         />
-      </div>
+      </Fragment>
     )
   }
 }
