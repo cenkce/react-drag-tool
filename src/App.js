@@ -54,8 +54,6 @@ class App extends Component {
     const offsetX = e.clientX - parentRect.left
     const offsetY = e.clientY - parentRect.top
 
-    this._rect = this._getInitialCoordinates()
-
     console.log('sds', this._rect)
     this.setState({
       marqueeStartPos: {
