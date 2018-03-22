@@ -6,20 +6,21 @@ export default class SelectableGroup extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      selected: []
+      selected: {}
     }
   }
 
-  handleSelection = e => {
-    let index = this.state.selected.indexOf(e) > -1
-    if (!index) {
-      this.state.selected.push(e)
-    }
+  handleSelection = (id, isSelected) => {
+    //let index = this.state.selected.some(e > -1)
+    
+   // if (!index) {
+      this.state.selected["item"+id] = isSelected;
+   // }
   }
 
   render() {
     return this.props.items.map((item, i) => {
-      const isElementSelected = this.state.selected.includes(i)
+      const isElementSelected = this.state.selected["item"+i] === true;
       return (
         <Item
           selectedItem={isElementSelected}
