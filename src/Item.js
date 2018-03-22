@@ -1,23 +1,16 @@
-import React, { Component } from "react"
-import { findDOMNode } from "react-dom"
+import React, { Component } from 'react'
+import { findDOMNode } from 'react-dom'
 
 export default class Item extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      selected: []
-    }
-  }
   componentWillReceiveProps() {
     const isTrue = this.selected()
     if (isTrue === true) {
-      console.log(this.props.selectKey, isTrue)
+      this.props.onSelection(this.props.selectKey)
     }
   }
 
-  selected = currentItem => {
+  selected = () => {
     const findDOMNODE = findDOMNode(this.item).getBoundingClientRect()
-
     const selectT = findDOMNODE.top
     const selectH = findDOMNODE.height
     const selectL = findDOMNODE.left
@@ -43,7 +36,12 @@ export default class Item extends Component {
 
   render() {
     return (
-      <div ref={c => (this.item = c)} className="flex-item">
+      <div
+        ref={c => (this.item = c)}
+        className={
+          this.props.selectedItem ? 'flex-item selectedItem' : 'flex-item'
+        }
+      >
         <span>{this.props.item}</span>
       </div>
     )
