@@ -3,10 +3,10 @@ import { findDOMNode } from 'react-dom'
 
 export default class Item extends Component {
   componentWillReceiveProps() {
-    const isTrue = this.selected()
-    if (isTrue === true) {
-      this.props.onSelection(this.props.selectKey)
-    }
+//    const isTrue = this.selected()
+  //  if (isTrue === true) {
+      this.props.onSelection(this.props.selectKey, this.selected())
+    //}
   }
 
   selected = () => {
