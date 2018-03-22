@@ -19,9 +19,10 @@ export default class SelectableGroup extends Component {
 
   render() {
     return this.props.items.map((item, i) => {
+      const isElementSelected = this.state.selected.includes(i)
       return (
         <Item
-          selectedItem={true}
+          selectedItem={isElementSelected}
           onSelection={this.handleSelection}
           item={item.title}
           key={i}
